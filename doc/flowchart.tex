@@ -1,0 +1,124 @@
+\documentclass[dvipsnames,aspectratio=43]{beamer}
+
+%!TEX program=xetex
+
+% packages
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{pgffor}
+\usepackage{calc}
+\usepackage{xcolor}
+
+% presets
+\usetikzlibrary{
+	shapes.geometric,
+	arrows.meta,
+	positioning
+}
+
+%\setbeamertemplate{background}{
+%	\includegraphics[keepaspectratio]{background.png}
+%}
+
+\setbeamertemplate{navigation symbols}{} 
+
+% macro
+\newcommand{\tbox}[2]{
+	\begin{tabular}{#1}
+		#2
+	\end{tabular}
+}
+
+\begin{document}
+	\begin{frame}
+		\begin{figure}[H]
+			\centering
+			\scalebox{.6}{
+				\def \dist{.5in}
+				
+				\tikzset{
+					rounded corners = .1em,
+					every node/.style = {
+						draw,
+						line width = 1pt,
+						draw = Cerulean,
+						fill = cyan,
+						fill opacity = .25,
+						text = gray,
+						text opacity = 1
+					},
+					arrow/.style = {
+						Cerulean,
+						line width=1pt
+					},
+					outs/.style = {
+						draw=none,
+						fill=none,
+						text = Cerulean
+					}
+				}
+				
+				\begin{tikzpicture}[node distance=.5in]
+					\draw
+						node [rectangle] (WI) {
+							\tbox{c}{
+								\textbf{Start} \\
+								Web Interface
+							}
+						}
+						node [diamond, aspect=2, inner sep=-.5ex, below of=WI, yshift=-\dist] (US) {
+							\tbox{c}{User \\ Selection}
+						}
+						node [rectangle, below left of=US, xshift=-(\dist+2em), yshift=-\dist] (HS) {
+							\tbox{c}{
+								\tbox{c}{Higher Studies} \\ \scriptsize
+								\tbox{l}{Student who want to percive \\ Higher studies}
+							}
+						}
+						node [rectangle, below right of=US, xshift=\dist+2em, yshift=-\dist] (CW) {
+							\tbox{c}{
+								\tbox{c}{Corporate World} \\ \scriptsize
+								\tbox{l}{Student who want to percive \\ Corporate world}
+							}
+						}
+						node [rectangle, below of=CW, yshift=-\dist] (MI) {
+							\tbox{c}{
+								Mock Interview \\ \scriptsize
+								\tbox{l}{
+									Live Interview \\ environment
+								}
+							}
+						}
+						node [rectangle, below of=HS, yshift=-\dist] (ME) {
+							\tbox{c}{
+								Mock Exam \\ \scriptsize
+								\tbox{l}{
+									Live Exam \\ environment
+								}
+							}
+						}
+						node [rectangle, below of=US, yshift=-\dist*4.5] (PP) {
+							\tbox{c}{
+								\textbf{END} \\
+								Performance and Progress \\ \scriptsize
+								\tbox{l}{
+									Comprehensive report of \\ examination or interview \\
+									taken and overall progress
+								}
+							}
+						}
+					;
+					\draw [arrow, -Straight Barb] (WI) -- (US) ;
+					\draw [arrow, -Straight Barb] (US) -|
+						node[outs, below left, yshift=-1em] {\scriptsize Competitive Exams} (HS) ;
+					\draw [arrow, -Straight Barb] (US) -|
+						node[outs, below right, yshift=-1em] {\scriptsize Jobs} (CW) ;
+					\draw [arrow, -Straight Barb] (HS) -- (ME) ;
+					\draw [arrow, -Straight Barb] (CW) -- (MI) ;
+					\draw [arrow, -Straight Barb] (MI) |- (PP) ;
+					\draw [arrow, -Straight Barb] (ME) |- (PP) ;
+				\end{tikzpicture}
+			}
+		\end{figure}
+	\end{frame}
+\end{document}
