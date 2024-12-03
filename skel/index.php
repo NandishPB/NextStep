@@ -16,16 +16,28 @@
 			<button class="login-button" onclick="signupOverlay()"> Sign Up </button>
 			<button class="login-button" onclick="loginOverlay()"> Login </button>
 		</footer>
-		<div class="menu">
-			<div class="menu-container">
-				<div class="menu-overlay" id="menu">
-					<button><a href="index.php"> Home </a></button><br/>
-					<button onclick="materialList()"> Materials </button><br/>
-					<button onclick="interviewList()"> Interview </button><br/>
-					<button onclick="signupOverlay()"> Sign Up </button><br/>
-					<button onclick="loginOverlay()"> Login </button><br/>
-					<button><a href="AboutUs.html"> About Us </a></button>
-				</div>
+		<div class="menu-container" id="menu">
+			<div class="menu-overlay">
+				<button><a href="index.php"> Home </a></button><br/>
+				<button onclick="materialList()"> Materials </button><br/>
+				<button onclick="interviewList()"> Interview </button><br/>
+				<button onclick="signupOverlay()"> Sign Up </button><br/>
+				<button onclick="loginOverlay()"> Login </button><br/>
+				<button > FAQ </button><br/>
+				<button > Feed Back </button><br/>
+				<button><a onclick="aboutUs()"> About Us </a></button>
+			</div>
+		</div>
+		<div class="au-container" id="about">
+			<div class="au-overlay">
+				<h1> About Us </h1>
+				<h2> Members </h2>
+				<ul>
+					<li> Naik Nishanth </li>
+					<li> Nandish P.B  </li>
+					<li> Shreyas  </li>
+					<li> Vinayaka M.N </li>
+				</ul>
 			</div>
 		</div>
 		<div class="login-container">
@@ -44,7 +56,6 @@
 					<button class="submit-button" name="login" value="1" type="submit"> Login </button>
 				</form>
 			</div>
-
 			<div class="login-overlay" id="signup">
 				<img class="close-button" src="logos/close.svg" onclick="clearOverlay()" alt="x"/>
 				<h1> Sign Up </h1>

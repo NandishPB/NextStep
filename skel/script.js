@@ -1,5 +1,6 @@
+const clearList = ['screen-overlay', 'signup', 'login', 'materials', 'interview', 'menu', 'about'];
+
 function clearOverlay () {
-	const clearList = ['screen-overlay', 'signup', 'login', 'menu', 'materials', 'interview'];
 	clearList.forEach (item => {
 		document.getElementById (item).style.display = 'none';
 	});
@@ -24,33 +25,24 @@ function clearOnEscape () {
 }
 
 function loginOverlay () {
+	clearOverlay();
 	clearOnEscape ();
-	const clearList = ['signup', 'materials', 'interview', 'menu'];
-	clearList.forEach (item => {
-		document.getElementById (item).style.display = 'none';
-	});
 	document.getElementById ('screen-overlay').style.display = 'block';
 	document.getElementById ('login').style.display = 'block';
 }
 
 function signupOverlay () {
+	clearOverlay();
 	clearOnEscape ();
-	const clearList = ['login', 'materials', 'interview', 'menu'];
-	clearList.forEach (item => {
-		document.getElementById (item).style.display = 'none';
-	});
 	document.getElementById ('screen-overlay').style.display = 'block';
 	document.getElementById ('signup').style.display = 'block';
 }
 
 function menuOverlay () {
+	clearOverlay();
 	clearOnEscape ();
-	const clearList = ['login', 'signup', 'materials', 'interview'];
-	clearList.forEach (item => {
-		document.getElementById (item).style.display = 'none';
-	});
 	document.getElementById ('screen-overlay').style.display = 'block';
-	document.getElementById ('menu').style.display = 'block';
+	document.getElementById ('menu').style.display = 'flex';
 }
 
 function unameValidate () {
@@ -68,22 +60,21 @@ function unameValidate () {
 
 function materialList () {
 	clearOnEscape ();
-	const clearList = ['login', 'signup', 'interview', 'menu'];
-	clearList.forEach (item => {
-		document.getElementById (item).style.display = 'none';
-	});
-	document.getElementById ('interview').style.display = 'none';
+	clearOverlay();
 	document.getElementById ('screen-overlay').style.display = 'block';
 	document.getElementById ('materials').style.display = 'block';
 }
 
 function interviewList () {
+	clearOverlay();
 	clearOnEscape ();
-	const clearList = ['login', 'signup', 'materials', 'menu'];
-	clearList.forEach (item => {
-		document.getElementById (item).style.display = 'none';
-	});
-	document.getElementById ('materials').style.display = 'none';
 	document.getElementById ('screen-overlay').style.display = 'block';
 	document.getElementById ('interview').style.display = 'block';
+}
+
+function aboutUs () {
+	clearOverlay();
+	clearOnEscape ();
+	document.getElementById ('screen-overlay').style.display = 'block';
+	document.getElementById ('about').style.display = 'flex';
 }

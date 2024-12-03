@@ -23,9 +23,11 @@ html {
 }
 
 body {
+  height: 100vh;
+  width: 100vw;
   color: white;
   margin:0;
-  padding-top: 40px;
+  padding-top: 5vh;
   background-color: rgba(28, 28, 28, 1);
   background-size: 100% 100vh;
   animation: fade-animation 1s linear;
@@ -59,6 +61,10 @@ h1,h2,h3,h4,h5,h6 {
   text-align: center;
   z-index: 1;
 }
+.logo-menu {
+  background: none;
+  text-decoration: none;
+}
 
 .logo-menu img {
   filter: invert(100%);
@@ -67,19 +73,17 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .menu-container {
-  display: flex;
-  padding-top: 20px;
+  display: none;
   float: left;
 }
 
 .menu-overlay {
   position: fixed;
-  display: none;
   background-color: rgba(255, 255, 255, .25);
   color: white;
   max-width: 25vw;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 0px 0px 10px 0px;
   filter: drop-shadow(5px 5px 3px black);
   backdrop-filter: blur(10px);
   animation: pop-in .25s linear;
@@ -90,7 +94,7 @@ h1,h2,h3,h4,h5,h6 {
   cursor: default;
 }
 
-.menu-overlay a, .menu-overlay button {
+.menu-overlay button {
   color: white;
   text-decoration: none;
   font-family: 'TeX Gyre Heros';
@@ -98,13 +102,24 @@ h1,h2,h3,h4,h5,h6 {
   font-weight: bold;
   text-align: left;
   background: none;
+  padding-right: 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 2px;
   width: 100%;
 }
 
+.menu-overlay a {
+  color: white;
+  text-decoration: none;
+  font-family: 'TeX Gyre Heros';
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+  text-align: left;
+}
+
 .menu-overlay button:hover {
-  background: rgba(255, 255, 255, .35);
+  background: rgba(0, 116, 255, .8);
 }
 
 .logo {
@@ -122,7 +137,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .logo-text {
-  color: inherit;
+  color: white;
   text-decoration: none;
 }
 
@@ -152,19 +167,19 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .login-container {
-  padding-top: 40px;
   display: flex;
   justify-content: center;
   align-content: center;
 }
 
-.login-overlay, .signup-overlay {
+.login-overlay, .signup-overlay, .au-overlay {
   position: fixed;
   display: none;
   background-color: rgba(255, 255, 255, .25);
   color: white;
   min-width: 25vw;
   font-family: 'Lato Heavy';
+  margin: 4vh;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
@@ -264,6 +279,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .greet-container {
   display: flex;
+  margin: 4vh;
   justify-content: center;
   align-content: center;
   top: 0;
@@ -273,7 +289,6 @@ h1,h2,h3,h4,h5,h6 {
   background: linear-gradient(45deg, rgba(0, 0, 0, .25), rgba(0, 0, 0, .25)), url('books.png');
   background-size: cover;
   padding: 20px;
-  margin: auto;
   border-radius: 5px;
   filter: drop-shadow(5px 5px 5px black);
   animation: fade-in 1s linear;
@@ -300,6 +315,32 @@ h1,h2,h3,h4,h5,h6 {
   backdrop-filter: blur(10px);
   animation: pop-in .25s linear;
   z-index: 2;
+}
+
+.au-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: none;
+  min-width: 45vw;
+  justify-content: center;
+  align-content: center;
+}
+
+.au-overlay {
+  display: block;
+}
+
+.au-overlay ul {
+  font-family: 'Lato Heavy';
+  line-height: 40px;
+  margin: 4vh;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  text-align: justify;
+  text-decoration: none;
 }
 
 /* animations */
