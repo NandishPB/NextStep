@@ -1,5 +1,5 @@
 function clearOverlay () {
-	const clearList = ['screen-overlay', 'signup', 'login', 'materials', 'interview'];
+	const clearList = ['screen-overlay', 'signup', 'login', 'menu', 'materials', 'interview'];
 	clearList.forEach (item => {
 		document.getElementById (item).style.display = 'none';
 	});
@@ -25,7 +25,7 @@ function clearOnEscape () {
 
 function loginOverlay () {
 	clearOnEscape ();
-	const clearList = ['signup', 'materials', 'interview'];
+	const clearList = ['signup', 'materials', 'interview', 'menu'];
 	clearList.forEach (item => {
 		document.getElementById (item).style.display = 'none';
 	});
@@ -35,12 +35,22 @@ function loginOverlay () {
 
 function signupOverlay () {
 	clearOnEscape ();
-	const clearList = ['login', 'materials', 'interview'];
+	const clearList = ['login', 'materials', 'interview', 'menu'];
 	clearList.forEach (item => {
 		document.getElementById (item).style.display = 'none';
 	});
 	document.getElementById ('screen-overlay').style.display = 'block';
 	document.getElementById ('signup').style.display = 'block';
+}
+
+function menuOverlay () {
+	clearOnEscape ();
+	const clearList = ['login', 'signup', 'materials', 'interview'];
+	clearList.forEach (item => {
+		document.getElementById (item).style.display = 'none';
+	});
+	document.getElementById ('screen-overlay').style.display = 'block';
+	document.getElementById ('menu').style.display = 'block';
 }
 
 function unameValidate () {
@@ -58,6 +68,10 @@ function unameValidate () {
 
 function materialList () {
 	clearOnEscape ();
+	const clearList = ['login', 'signup', 'interview', 'menu'];
+	clearList.forEach (item => {
+		document.getElementById (item).style.display = 'none';
+	});
 	document.getElementById ('interview').style.display = 'none';
 	document.getElementById ('screen-overlay').style.display = 'block';
 	document.getElementById ('materials').style.display = 'block';
@@ -65,6 +79,10 @@ function materialList () {
 
 function interviewList () {
 	clearOnEscape ();
+	const clearList = ['login', 'signup', 'materials', 'menu'];
+	clearList.forEach (item => {
+		document.getElementById (item).style.display = 'none';
+	});
 	document.getElementById ('materials').style.display = 'none';
 	document.getElementById ('screen-overlay').style.display = 'block';
 	document.getElementById ('interview').style.display = 'block';

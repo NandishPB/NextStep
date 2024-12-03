@@ -9,10 +9,25 @@
 	<body>
 		<div id="screen-overlay" onclick="clearOverlay()"> </div>
 		<footer class="top-footer">
+			<span class="logo-menu" onclick="menuOverlay()">
+				<img src="logos/list.svg"/>
+			</span>
 			<span class="logo"><a href="index.php" class="logo-text"> NextStep </a></span>
 			<button class="login-button" onclick="signupOverlay()"> Sign Up </button>
 			<button class="login-button" onclick="loginOverlay()"> Login </button>
 		</footer>
+		<div class="menu">
+			<div class="menu-container">
+				<div class="menu-overlay" id="menu">
+					<button><a href="index.php"> Home </a></button><br/>
+					<button onclick="materialList()"> Materials </button><br/>
+					<button onclick="interviewList()"> Interview </button><br/>
+					<button onclick="signupOverlay()"> Sign Up </button><br/>
+					<button onclick="loginOverlay()"> Login </button><br/>
+					<button><a href="AboutUs.html"> About Us </a></button>
+				</div>
+			</div>
+		</div>
 		<div class="login-container">
 			<div class="login-overlay" id="login">
 				<img class="close-button" src="logos/close.svg" onclick="clearOverlay()" alt="x"/>
@@ -50,7 +65,7 @@
 				</form>
 			</div>
 		</div>
-		<center class="greet-bg">
+		<center>
 			<div class="greet">
 				<div class="greet-container">
 					<div class="material-overlay" id="materials">
@@ -64,10 +79,17 @@
 						Select your category :
 					</div>
 				</div>
-				Mastery Through Unlimited Practices <br/>
-				<button onclick="materialList()"> Materials </button>
-				<button onclick="interviewList()"> Interview </button>
+				<div class="greet-bg">
+					Mastery Through Unlimited Practices <br/>
+					<button onclick="materialList()"> Materials </button>
+					<button onclick="interviewList()"> Interview </button>
+				</div>
 			</div>
+			<?php
+				for ($j = 0; $j < 6 ; $j++)
+					for ($i = 1; $i < 6 ; $i++)
+						echo "<h$i> Heading $i </h$i>";
+			?>
 		</center>
 		<footer class="down-footer">
 			<div>
