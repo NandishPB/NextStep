@@ -9,23 +9,34 @@
 	<body>
 		<div id="screen-overlay" onclick="clearOverlay()"> </div>
 		<footer class="top-footer">
-			<span class="logo-menu" onclick="menuOverlay()">
+			<span class="logo-menu" onclick="menuOverlay()" id="main-menu">
 				<img src="logos/list.svg"/>
 			</span>
 			<span class="logo"><a href="index.php" class="logo-text"> NextStep </a></span>
-			<button class="login-button" onclick="signupOverlay()"> Sign Up </button>
-			<button class="login-button" onclick="loginOverlay()"> Login </button>
+			<?php
+				if (!isset ($_COOKIE['user_name'])) {
+					//setcookie ('user_name', 'xyz', time () + 30 * 24 * 60 * 60);
+					echo '<button class="login-button" onclick="signupOverlay()"> Sign Up </button>
+						<button class="login-button" onclick="loginOverlay()"> Login </button>';
+				} else
+				echo '<a href="index.php"><img class="logged" src="logos/person.svg"/></a>';
+			?>
 		</footer>
+		<div class="p-container"><div class="p-bar" id="pBar"> </div></div>
 		<div class="menu-container" id="menu">
 			<div class="menu-overlay">
-				<button><a href="index.php"> Home </a></button><br/>
-				<button onclick="materialList()"> Materials </button><br/>
-				<button onclick="interviewList()"> Interview </button><br/>
-				<button onclick="signupOverlay()"> Sign Up </button><br/>
-				<button onclick="loginOverlay()"> Login </button><br/>
-				<button > FAQ </button><br/>
-				<button > Feed Back </button><br/>
-				<button><a onclick="aboutUs()"> About Us </a></button>
+				<a href="index.php"> Home </a>
+				<button onclick="materialList()"> Materials </button>
+				<button onclick="interviewList()"> Interview </button>
+				<button > FAQ </button>
+				<button > Feed Back </button>
+			<?php
+				if (!isset ($_COOKIE['user_name'])) {
+			?>
+				<button onclick="signupOverlay()"> Sign Up </button>
+				<button onclick="loginOverlay()"> Login </button>
+			<?php } ?>
+				<button onclick="aboutUs()"> About Us </button>
 			</div>
 		</div>
 		<div class="au-container" id="about">
@@ -94,6 +105,28 @@
 					Mastery Through Unlimited Practices <br/>
 					<button onclick="materialList()"> Materials </button>
 					<button onclick="interviewList()"> Interview </button>
+				</div>
+			</div>
+
+			<div class="demo">
+				<h1> How It Works </h1>
+				<div class="demo-container">
+					<div class="demo-steps">
+						<h4> Preferences </h4>
+						<p> Select the category you want to practice. </p>
+					</div>
+					<div class="demo-steps">
+						<h4> Register </h4>
+						<p> Register for personalized experience. </p>
+					</div>
+					<div class="demo-steps">
+						<h4> Dashboard </h4>
+						<p> Explore resources and practice live Interview sessions. </p>
+					</div>
+					<div class="demo-steps">
+						<h4> Progress </h4>
+						<p> Check your progress on our dashboard visual </p>
+					</div>
 				</div>
 			</div>
 			<?php

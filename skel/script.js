@@ -1,6 +1,15 @@
 const clearList = ['screen-overlay', 'signup', 'login', 'materials', 'interview', 'menu', 'about'];
 
+window.onscroll = function () {
+	document.getElementById ('pBar').style.width = ((document.body.scrollTop ||
+		document.documentElement.scrollTop) / (document.documentElement.scrollHeight -
+		document.documentElement.clientHeight)) * 100 + "%";
+};
+
 function clearOverlay () {
+	if (document.getElementsByClassName ('menu-close').length)
+		document.getElementsByClassName ('menu-close')[0].outerHTML =
+			'<span class="logo-menu" onclick="menuOverlay()" id="main-menu"><img src="logos/list.svg"/></span>';
 	clearList.forEach (item => {
 		document.getElementById (item).style.display = 'none';
 	});
@@ -25,24 +34,26 @@ function clearOnEscape () {
 }
 
 function loginOverlay () {
-	clearOverlay();
+	clearOverlay ();
 	clearOnEscape ();
 	document.getElementById ('screen-overlay').style.display = 'block';
 	document.getElementById ('login').style.display = 'block';
 }
 
 function signupOverlay () {
-	clearOverlay();
+	clearOverlay ();
 	clearOnEscape ();
 	document.getElementById ('screen-overlay').style.display = 'block';
 	document.getElementById ('signup').style.display = 'block';
 }
 
 function menuOverlay () {
-	clearOverlay();
+	clearOverlay ();
 	clearOnEscape ();
 	document.getElementById ('screen-overlay').style.display = 'block';
 	document.getElementById ('menu').style.display = 'flex';
+	document.getElementsByClassName ('logo-menu')[0].outerHTML =
+		'<span class="menu-close" onclick="clearOverlay()"><img src="logos/close.svg"/></span>';
 }
 
 function unameValidate () {
@@ -60,20 +71,20 @@ function unameValidate () {
 
 function materialList () {
 	clearOnEscape ();
-	clearOverlay();
+	clearOverlay ();
 	document.getElementById ('screen-overlay').style.display = 'block';
 	document.getElementById ('materials').style.display = 'block';
 }
 
 function interviewList () {
-	clearOverlay();
+	clearOverlay ();
 	clearOnEscape ();
 	document.getElementById ('screen-overlay').style.display = 'block';
 	document.getElementById ('interview').style.display = 'block';
 }
 
 function aboutUs () {
-	clearOverlay();
+	clearOverlay ();
 	clearOnEscape ();
 	document.getElementById ('screen-overlay').style.display = 'block';
 	document.getElementById ('about').style.display = 'flex';

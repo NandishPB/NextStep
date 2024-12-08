@@ -1,21 +1,8 @@
-@font-face {
-  font-family: 'Lato Heavy';
-  src: url('fonts/Lato-Heavy.ttf');
-}
+/* fonts */
+@import url('fonts.css');
 
-@font-face {
-  font-family: 'TeX Gyre Heros';
-  src: url('fonts/texgyreheros-regular.otf');
-}
-
-@font-face {
-  font-family: 'GohuFont uni11 Nerd Font';
-  src: url('fonts/GohuFontuni11NerdFont-Regular.ttf');
-}
-
-*:focus {
-  outline: none;
-}
+/* animations */
+@import url('animations.css');
 
 html {
   scroll-behavior: smooth;
@@ -26,11 +13,15 @@ body {
   height: 100vh;
   width: 100vw;
   color: white;
-  margin:0;
-  padding-top: 5vh;
+  margin: 0;
+  padding-top: 35px;
   background-color: rgba(28, 28, 28, 1);
   background-size: 100% 100vh;
   animation: fade-animation 1s linear;
+}
+
+*:focus {
+  outline: none;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -59,8 +50,9 @@ h1,h2,h3,h4,h5,h6 {
   background: rgba(255, 255, 255, .25);
   padding: 10px;
   text-align: center;
-  z-index: 1;
+  z-index: 3;
 }
+
 .logo-menu {
   background: none;
   text-decoration: none;
@@ -72,16 +64,35 @@ h1,h2,h3,h4,h5,h6 {
   width: 25px;
 }
 
+.p-container {
+  position: fixed;
+  margin-top: 10px;
+  width: 100%;
+  height: 2px;
+  background: none;
+  z-index: 3;
+}
+
+.p-bar {
+  height: 2px;
+  background: linear-gradient(to right, rgb(153, 0, 0), red);
+  width: 0%;
+}
+
+
 .menu-container {
   display: none;
   float: left;
 }
 
 .menu-overlay {
+  display: flex;
+  flex-direction: column;
   position: fixed;
-  background-color: rgba(255, 255, 255, .25);
+  top: 45px;
+  background-color: rgba(255, 255, 255, .15);
   color: white;
-  max-width: 25vw;
+  max-width: 162px;
   padding: 20px;
   border-radius: 0px 0px 10px 0px;
   filter: drop-shadow(5px 5px 3px black);
@@ -92,9 +103,10 @@ h1,h2,h3,h4,h5,h6 {
 
 .menu-overlay a {
   cursor: default;
+  padding: 1px 6px;
 }
 
-.menu-overlay button {
+.menu-overlay button, .menu-overlay a {
   color: white;
   text-decoration: none;
   font-family: 'TeX Gyre Heros';
@@ -102,23 +114,13 @@ h1,h2,h3,h4,h5,h6 {
   font-weight: bold;
   text-align: left;
   background: none;
-  padding-right: 20px;
   border: none;
   border-radius: 2px;
-  width: 100%;
+  padding-right: 20px;
+  overflow: hidden;
 }
 
-.menu-overlay a {
-  color: white;
-  text-decoration: none;
-  font-family: 'TeX Gyre Heros';
-  font-size: 20px;
-  font-weight: bold;
-  text-align: left;
-  text-align: left;
-}
-
-.menu-overlay button:hover {
+.menu-overlay button:hover, .menu-overlay a:hover {
   background: rgba(0, 116, 255, .8);
 }
 
@@ -148,22 +150,28 @@ h1,h2,h3,h4,h5,h6 {
 .login-button {
   background: none;
   border: none;
-  padding-right: 20px;
+  margin-right: 10px;
   font-family: 'TeX Gyre Heros';
   font-weight: bold;
   font-size: 16px;
   color: white;
   float: right;
+  transition: transform .2s;
 }
 
 .login-button:focus {
-  text-decoration: underline;
-  text-underline-offset: 20%;
+  transform: scale(1.1);
 }
 
 .login-button:hover {
-  text-decoration: underline;
-  text-underline-offset: 20%;
+  transform: scale(1.1);
+}
+
+.logged {
+  filter: invert(100%);
+  float: right;
+  width: 25px;
+  margin-right: 20px;
 }
 
 .login-container {
@@ -175,11 +183,11 @@ h1,h2,h3,h4,h5,h6 {
 .login-overlay, .signup-overlay, .au-overlay {
   position: fixed;
   display: none;
-  background-color: rgba(255, 255, 255, .25);
+  background-color: rgba(255, 255, 255, .15);
   color: white;
-  min-width: 25vw;
+  min-width: 230px;
+  margin-top: 40px;
   font-family: 'Lato Heavy';
-  margin: 4vh;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
@@ -198,6 +206,7 @@ h1,h2,h3,h4,h5,h6 {
   text-align: center;
   color: white;
   backdrop-filter: blur(10px);
+  transition: transform .2s ;
 }
 
 .cancle-button {
@@ -210,11 +219,17 @@ h1,h2,h3,h4,h5,h6 {
   background-color: rgba(138, 43, 226, .5);
 }
 
+.cancle-button:hover, .submit-button:hover {
+  transform: scale(1.1);
+}
+
 .cancle-button:focus {
+  transform: scale(1.1);
   backdrop-filter: drop-shadow(5px 5px 5px white);
 }
 
 .submit-button:focus {
+  transform: scale(1.1);
   backdrop-filter: drop-shadow(5px 5px 5px white);
 }
 
@@ -271,15 +286,17 @@ h1,h2,h3,h4,h5,h6 {
   background: rgba(0, 0, 0, .25);
   animation: pop-in 1s linear;
   backdrop-filter: blur(5px);
+  transition: transform .2s;
 }
 
 .greet button:hover {
   background: rgba(0, 0, 0, .5);
+  transform: scale(1.075);
 }
 
 .greet-container {
   display: flex;
-  margin: 4vh;
+  margin: 20px;
   justify-content: center;
   align-content: center;
   top: 0;
@@ -297,15 +314,32 @@ h1,h2,h3,h4,h5,h6 {
 .close-button {
   filter: invert(100%);
   float: right;
+  transition: transform .2s;
+}
+
+.close-button:hover {
+  transform: scale(1.5);
+}
+
+.menu-close {
+  width: 25px;
+  float: left;
+  filter: invert(100%);
+  transition: transform .2s;
+}
+
+.menu-close:hover {
+  transform: scale(1.5);
 }
 
 .material-overlay, .interview-overlay {
   position: fixed;
   display: none;
   font-size: 20px;
-  background-color: rgba(255, 255, 255, .25);
+  background-color: rgba(255, 255, 255, .15);
   color: white;
-  min-width: 55vw;
+  min-width: 370px;
+  margin-top: 20px;
   font-family: 'Lato Heavy';
   padding: 20px;
   border-radius: 10px;
@@ -323,7 +357,7 @@ h1,h2,h3,h4,h5,h6 {
   right: 0;
   margin: auto;
   display: none;
-  min-width: 45vw;
+  min-width: 290px;
   justify-content: center;
   align-content: center;
 }
@@ -335,7 +369,7 @@ h1,h2,h3,h4,h5,h6 {
 .au-overlay ul {
   font-family: 'Lato Heavy';
   line-height: 40px;
-  margin: 4vh;
+  margin-top 20px;
   font-size: 20px;
   font-weight: bold;
   color: white;
@@ -343,24 +377,45 @@ h1,h2,h3,h4,h5,h6 {
   text-decoration: none;
 }
 
-/* animations */
-@keyframes fade-animation {
-  from {
-    opacity: .1;
-  }
-  to {
-    opacity: 1;
-  }
+.demo {
+  margin: 50px 0;
+  padding-bottom: 20px;
+  align-content: center;
+  background: linear-gradient(to right, rgba(123, 67, 151, .75), rgba(220, 36, 48, .75));
 }
 
-@keyframes pop-in {
-  from {
-    opacity: 0;
-    transform: scale(0.5, 0.5);
-  }
+.demo-container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 75vw;
+  gap: 30px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
 
-  to {
-    opacity: 1;
-    transform: scale(1, 1);
-  }
+.demo-steps {
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  font-family: 'TeX Gyre Heros';
+  text-align: center;
+  flex: 1 1 0;
+  padding: 20px;
+  background: rgba(255, 255, 255, .1);
+  border-radius: 10px;
+  filter: drop-shadow(5px 5px 5px black);
+  transition: transform .2s;
+}
+
+.demo-steps:hover {
+  transform: scale(1.075);
+}
+
+.demo-steps h4, .demo-steps p {
+  margin: 0;
+}
+
+.demo-steps p {
+  margin-top: 10px;
+  text-align: left;
 }

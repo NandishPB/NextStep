@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'Lato Heavy';
+  src: url('fonts/Lato-Heavy.ttf');
+}
+
+@font-face {
+  font-family: 'TeX Gyre Heros';
+  src: url('fonts/texgyreheros-regular.otf');
+}
+
+@font-face {
+  font-family: 'GohuFont uni11 Nerd Font';
+  src: url('fonts/GohuFontuni11NerdFont-Regular.ttf');
+}
