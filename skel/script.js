@@ -1,4 +1,6 @@
-const clearList = ['screen-overlay', 'signup', 'login', 'materials', 'interview', 'menu', 'about'];
+const clearList = ['screen-overlay', 'signup', 'login', 'profile', 'interview', 'menu', 'about'];
+const fregex = /^(?![0-9.-])(?=.{1,100}$)[a-zA-Z0-9._ -]+(?<![.\- ])$/;
+const uregex = /^(?![0-9.-])(?=.{1,32}$)[a-zA-Z0-9._]+(?<![.-])$/;
 
 window.onscroll = function () {
 	document.getElementById ('pBar').style.width = ((document.body.scrollTop ||
@@ -9,9 +11,11 @@ window.onscroll = function () {
 function clearOverlay () {
 	if (document.getElementsByClassName ('menu-close').length)
 		document.getElementsByClassName ('menu-close')[0].outerHTML =
-			'<span class="logo-menu" onclick="menuOverlay()" id="main-menu"><img src="logos/list.svg"/></span>';
+		'<span class="logo-menu" onclick="menuOverlay()" id="main-menu">' +
+		'<img src="logos/list.svg" alt="x"/></span>';
 	clearList.forEach (item => {
-		document.getElementById (item).style.display = 'none';
+		if (document.getElementById (item) != null)
+			document.getElementById (item).style.display = 'none'
 	});
 }
 
@@ -53,27 +57,62 @@ function menuOverlay () {
 	document.getElementById ('screen-overlay').style.display = 'block';
 	document.getElementById ('menu').style.display = 'flex';
 	document.getElementsByClassName ('logo-menu')[0].outerHTML =
-		'<span class="menu-close" onclick="clearOverlay()"><img src="logos/close.svg"/></span>';
+		'<span class="menu-close" onclick="clearOverlay()"><img src="logos/close.svg" alt="x"/></span>';
 }
 
-function unameValidate () {
-	const regex = /^(?![0-9.-])(?=.{1,32}$)[a-zA-Z0-9._-]+(?<![.-])$/;
-	const regs = ['inlog', 'insig'];
-	regs.forEach (reg => {
-		if (document.getElementById (reg) &&
-			(regex.test (document.getElementById (reg).value) || document.getElementById (reg).value === '')
-		)
-			document.getElementById (reg).style.backgroundColor = 'rgba(255, 255, 255, .1)';
-		else
-			document.getElementById (reg).style.backgroundColor = 'rgba(255, 0, 0, .1)';
-	});
+function nameValidate (name, regex) {
+	if (document.getElementById (name) && regex.test (document.getElementById (name).value))
+		return true;
+	else
+		return false;
 }
 
-function materialList () {
-	clearOnEscape ();
+function colorValidate (name, regex) {
+	if (document.getElementById (name) &&
+	(regex.test (document.getElementById (name).value) || document.getElementById (name).value == ''))
+		document.getElementById (name).style.backgroundColor = 'rgba(255, 255, 255, .1)';
+	else
+		document.getElementById (name).style.backgroundColor = 'rgba(255, 0, 0, .1)';
+}
+
+function formValidate (submit) {
+	if (submit == 'signup_submit')
+		if (nameValidate ('infsig', fregex) && nameValidate ('insig', uregex) &&
+			document.getElementsByName ('passwd')[1].value.length != 0)
+			document.getElementById ('login-form').submit ();
+		else {
+			if (!nameValidate ('infsig', fregex) && !nameValidate ('insig', uregex)) {
+				alert ('Please correct mistakes in your form !');
+				document.getElementById ('insig').value = '';
+				document.getElementById ('infsig').value = '';
+				document.getElementById ('insig').style.backgroundColor = 'rgba(255, 255, 255, .1)';
+				document.getElementById ('infsig').style.backgroundColor = 'rgba(255, 255, 255, .1)';
+			}
+
+			if (document.getElementsByName ('passwd')[1].value.length == 0)
+				alert ('Empty password !\nPlease Re-Enter');
+		}
+
+	if (submit == 'login_submit')
+		if (nameValidate ('inlog', uregex) && document.getElementsByName ('passwd')[0].value.length != 0)
+			document.getElementById ('login-form').submit ();
+		else {
+			if (!nameValidate ('inlog', uregex)) {
+				alert ('Please correct mistakes in your form !');
+				document.getElementById ('inlog').value = '';
+				document.getElementById ('inlog').style.backgroundColor = 'rgba(255, 255, 255, .1)';
+			}
+
+			if (document.getElementsByName ('passwd')[0].value.length == 0)
+				alert ('Empty password !\nPlease Re-Enter');
+		}
+}
+
+function showProfile () {
 	clearOverlay ();
+	clearOnEscape ();
 	document.getElementById ('screen-overlay').style.display = 'block';
-	document.getElementById ('materials').style.display = 'block';
+	document.getElementById ('profile').style.display = 'block';
 }
 
 function interviewList () {

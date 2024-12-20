@@ -1,4 +1,31 @@
-﻿<!DOCTYPE html>
+﻿<?php
+	$expiry = time () + 2592000;
+	if ($_SERVER["REQUEST_METHOD"] === 'POST') {
+		if ($_POST['signup'] == 1) {
+			$fname = $_POST['fname'];
+			$name = $_POST['uname'];
+			if (isset($name))
+				setcookie ('user_name', "$name", $expiry);
+			if (isset($fname))
+				setcookie ('user_fname', "$fname", $expiry);
+			header("Location: index.php");
+		}
+
+		if ($_POST['login'] == 1) {
+			$name = $_POST['uname'];
+			if (isset($name))
+				setcookie ('user_name', "$name", $expiry);
+			header("Location: index.php");
+		}
+
+		if ($_POST['logout'] == 1) {
+			setcookie ('user_name', null, 1);
+			setcookie ('user_fname', null, 1);
+			header("Location: index.php");
+		}
+	}
+?>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html" charset=UTF-8"/>
@@ -13,28 +40,25 @@
 				<img src="logos/list.svg"/>
 			</span>
 			<span class="logo"><a href="index.php" class="logo-text"> NextStep </a></span>
-			<?php
-				if (!isset ($_COOKIE['user_name'])) {
-					//setcookie ('user_name', 'xyz', time () + 30 * 24 * 60 * 60);
-					echo '<button class="login-button" onclick="signupOverlay()"> Sign Up </button>
-						<button class="login-button" onclick="loginOverlay()"> Login </button>';
-				} else
-				echo '<a href="index.php"><img class="logged" src="logos/person.svg"/></a>';
-			?>
+		<?php if (!isset ($_COOKIE['user_name'])) { ?>
+				<button class="login-button" onclick="signupOverlay()"> Sign Up </button>
+				<button class="login-button" onclick="loginOverlay()"> Login </button>
+		<?php } else { ?>
+				<img class="logged" src="logos/person.svg" onclick="showProfile ()"/>
+		<?php } ?>
 		</footer>
 		<div class="p-container"><div class="p-bar" id="pBar"> </div></div>
 		<div class="menu-container" id="menu">
 			<div class="menu-overlay">
 				<a href="index.php"> Home </a>
-				<button onclick="materialList()"> Materials </button>
 				<button onclick="interviewList()"> Interview </button>
 				<button > FAQ </button>
 				<button > Feed Back </button>
-			<?php
-				if (!isset ($_COOKIE['user_name'])) {
-			?>
+			<?php if (!isset ($_COOKIE['user_name'])) { ?>
 				<button onclick="signupOverlay()"> Sign Up </button>
 				<button onclick="loginOverlay()"> Login </button>
+			<?php } else { ?>
+				<button onclick="showProfile()"> Profile </button>
 			<?php } ?>
 				<button onclick="aboutUs()"> About Us </button>
 			</div>
@@ -51,31 +75,35 @@
 				</ul>
 			</div>
 		</div>
+	<?php if (!isset ($_COOKIE['user_name'])) { ?>
 		<div class="login-container">
 			<div class="login-overlay" id="login">
 				<img class="close-button" src="logos/close.svg" onclick="clearOverlay()" alt="x"/>
 				<h1> Login </h1>
-				<form method="post" id="login-form">
+				<form action="index.php" method="post" id="login-form">
 					<label> User Name <span class="req-ast"> * </span></label><br/>
-					<input id="inlog" name="uname" placeholder="user177" type="text" oninput="unameValidate()"
-						required/><br/><br/>
+					<input id="inlog" name="uname" placeholder="user177" type="text"
+						oninput="colorValidate('inlog', uregex)" required/><br/><br/>
 					<label> Password <span class="req-ast"> * </span></label><br/>
 					<input name="passwd" type="password" required/><br/><br/>
 					<button type="reset" class="cancle-button" onclick="resetForm()" formnovalidate>
 						Clear
 					</button>
-					<button class="submit-button" name="login" value="1" type="submit"> Login </button>
+					<button class="submit-button" name="login" value="1" onclick="formValidate('login_submit')">
+						Login
+					</button>
 				</form>
 			</div>
 			<div class="login-overlay" id="signup">
 				<img class="close-button" src="logos/close.svg" onclick="clearOverlay()" alt="x"/>
 				<h1> Sign Up </h1>
-				<form method="post" id="signup-form">
+				<form action="index.php" method="post" id="signup-form">
 					<label> Full Name <span class="req-ast"> * </span></label><br/>
-					<input name="fname" placeholder="John Smith" type="text" required/><br/><br/>
+					<input id="infsig" name="fname" placeholder="John Smith" type="text"
+						oninput="colorValidate('infsig', fregex)" required/><br/><br/>
 					<label> User Name <span class="req-ast"> * </span></label><br/>
-					<input id="insig" name="uname" placeholder="user177" type="text" oninput="unameValidate()"
-						required/><br/><br/>
+					<input id="insig" name="uname" placeholder="user177" type="text"
+						oninput="colorValidate('insig', uregex)" required/><br/><br/>
 					<label> Email <span class="req-ast"> * </span></label><br/>
 					<input name="mail" type="email" placeholder="someone@example.com" required/><br/><br/>
 					<label> Password <span class="req-ast"> * </span></label><br/>
@@ -83,27 +111,95 @@
 					<button type="reset" class="cancle-button" onclick="resetForm()" formnovalidate>
 						Clear
 					</button>
-					<button class="submit-button" name="signup" value="1" type="submit"> Sign Up </button>
+					<button class="submit-button" name="signup" value="1"
+						onclick="formValidate('signup_submit')">
+						Sign Up
+					</button>
 				</form>
 			</div>
 		</div>
+	<?php } else { ?>
+		<div class="profile-container">
+			<div class="profile-overlay" id="profile">
+				<img class="close-button" src="logos/close.svg" onclick="clearOverlay()" alt="x"/>
+				<h1> Profile </h1>
+				<h2> Full Name </h2> <p><?php echo $_COOKIE['user_fname']; ?></p>
+				<h2> User Name </h2> <p><?php echo $_COOKIE['user_name']; ?></p>
+				<form action="index.php" method="post">
+					<button name="logout" value="1" class="logout-button" type="submit">
+						Log Out
+					</button>
+				</form>
+			</div>
+		</div>
+	<?php } ?>
 		<center>
 			<div class="greet">
 				<div class="greet-container">
-					<div class="material-overlay" id="materials">
-						<img class="close-button" src="logos/close.svg" onclick="clearOverlay()" alt="x"/>
-						<h1> Practice Materials </h1>
-						Select your category :
-					</div>
 					<div class="interview-overlay" id="interview">
 						<img class="close-button" src="logos/close.svg" onclick="clearOverlay()" alt="x"/>
-						<h1> Mock Interview </h1>
-						Select your category :
+						<h1> Live Interview </h1>
+						<h3> Question </h3>
+						<div id="qa">
+							Why doesn't the semicolon (<span class="tt">;</span>) work to separate multiple
+							statements on a single line in Python, unlike languages like C ?
+						<h3 style="text-align: center;"> User Response </h3>
+							Python doesn't support multiple instances of code in a single line as in C like
+							<?php
+								echo (shell_exec (
+									"echo 'printf(\"hi what is your name : \"); scanf(\"%s\", &name);' | \
+									pygmentize -l c -f html"));?>
+
+							<h4> Rating : Partially Correct </h4>
+							<div class="exp">
+								<h4> Explanation </h4>
+								<p>
+									While the answer is technically correct in stating that Python doesn't allow
+									multiple statements on a single line using semicolons, it doesn't fully
+									explain the underlying reason. 
+								</p>
+								<b> A more comprehensive answer would include: </b>
+								<ul>
+									<li>
+										<b> Python's Readability Focus </b><br/>
+										Python's syntax emphasizes readability and clarity. Using semicolons
+										to separate statements can often make code less readable, especially
+										when dealing with complex expressions.
+									</li>
+									<li>
+										<b> Implicit Line Continuation </b><br/>
+										Python allows implicit line continuation for long statements, making the
+										use of semicolons unnecessary.
+									</li>
+									<li>
+										<b> Indentation-Based Syntax </b><br/>
+										Python's reliance on indentation to define code blocks further
+										discourages the use of semicolons.
+									</li>
+								</ul>
+								<b> A better response might be </b>
+								<p>
+									Python's design philosophy prioritizes code readability and maintainability.
+									Semicolons can often clutter code and hinder understanding.
+									Additionally, Python's implicit line continuation and indentation-based
+									syntax make the use of semicolons redundant.
+									By avoiding semicolons, Python promotes a cleaner and more consistent coding
+									style.
+							</div>
+						</div>
+						<!--
+
+
+
+
+
+
+
+						-->
 					</div>
 				</div>
 				<div class="greet-bg">
 					Mastery Through Unlimited Practices <br/>
-					<button onclick="materialList()"> Materials </button>
 					<button onclick="interviewList()"> Interview </button>
 				</div>
 			</div>
@@ -120,20 +216,19 @@
 						<p> Register for personalized experience. </p>
 					</div>
 					<div class="demo-steps">
-						<h4> Dashboard </h4>
+						<h4> Learn </h4>
 						<p> Explore resources and practice live Interview sessions. </p>
 					</div>
 					<div class="demo-steps">
-						<h4> Progress </h4>
+						<h4> Dashboard </h4>
 						<p> Check your progress on our dashboard visual </p>
 					</div>
 				</div>
 			</div>
-			<?php
-				for ($j = 0; $j < 6 ; $j++)
-					for ($i = 1; $i < 6 ; $i++)
-						echo "<h$i> Heading $i </h$i>";
-			?>
+
+			<div>
+				<h1 style="padding-bottom: 100px;"> Benifits </h1>
+			</div>
 		</center>
 		<footer class="down-footer">
 			<div>
